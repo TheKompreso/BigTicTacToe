@@ -1,21 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.Core;
 using UnityEngine;
 
 namespace Game
 {
     public class ApplicationController : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        BigGameField gameField;
+        private void Awake()
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            gameField = new BigGameField();
+            gameField.SetCellState(0, 0, 0, 0,CellState.cross);
+            gameField.Print();
         }
     }
 }
