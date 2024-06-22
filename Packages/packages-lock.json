@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.dada.commander": {
+      "version": "https://github.com/ainurdada/com.dada.commander.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "169f814c5a5570c7747ef1c062dab2dc98c32596"
+    },
     "com.unity.2d.animation": {
       "version": "9.0.4",
       "depth": 1,
