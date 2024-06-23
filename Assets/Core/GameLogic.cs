@@ -1,10 +1,21 @@
-using System;
-using Unity.IO.LowLevel.Unsafe;
+using Debug = UnityEngine.Debug;
 
 namespace Game.Core
 {
-    public class GameLogic
+    public enum Player
     {
-        BigGameField gameField;
+        Cross,
+        Zero,
+    }
+
+    public abstract class GameLogic
+    {
+        protected Player activePlayer = Player.Cross;
+
+        public abstract bool Move(Move move);
+
+        #region Debug
+        public abstract void Print();
+        #endregion
     }
 }

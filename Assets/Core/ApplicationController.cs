@@ -5,12 +5,18 @@ namespace Game
 {
     public class ApplicationController : MonoBehaviour
     {
-        BigGameField gameField;
+        GameLogic game;
         private void Awake()
         {
-            gameField = new BigGameField();
-            gameField.SetCellState(0, 0, 0, 0,CellState.cross);
-            gameField.Print();
+            game = new BigTicTacToeLogic();
+
+            game.Move(new BigTicTacToeMove((0, 0), (0, 0)));
+            game.Move(new BigTicTacToeMove((0, 0), (1, 0)));
+            game.Move(new BigTicTacToeMove((0, 0), (1, 1)));
+            game.Move(new BigTicTacToeMove((0, 0), (2, 0)));
+            game.Move(new BigTicTacToeMove((0, 0), (2, 2)));
+
+            game.Print();
         }
     }
 }

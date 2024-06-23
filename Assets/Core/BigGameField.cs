@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using UnityEngine;
 
 namespace Game.Core
@@ -7,27 +8,22 @@ namespace Game.Core
     public class BigGameField : GameField
     {
         [SerializeField] GameField[,] GameField;
-        public BigGameField()
+
+        public BigGameField((int column, int row) size, int winLength) : base(size, winLength)
         {
-            GameField = new GameField[3, 3];
-            for(int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    GameField[i, j] = new GameField();
-                }
-            }
+            Clear();
         }
-        public bool SetCellState(int field_column, int field_row, int column, int row, CellState state)
+
+        public bool SetCellState((int column, int row) field, (int column, int row) cell, CellState state)
         {
-            return GameField[field_column, field_row].SetCellState(column, row, state);
+            return GameField[field.column, field.row].SetCellState(cell.column, cell.row, state);
         }
         public GameField[,] GetFields()
         {
-            var outArray = new GameField[3, 3];
-            for (var i = 0; i < 3; i++)
+            GameField[,] outArray = new GameField[size.column, size.row];
+            for (int i = 0; i < size.column; i++)
             {
-                for (var j = 0; j < 3; j++)
+                for (int j = 0; j < size.row; j++)
                 {
                     outArray[i, j] = GameField[i, j].Copy();
                 }
@@ -37,15 +33,26 @@ namespace Game.Core
 
         public new void Print()
         {
-            for(int i = 0; i < 3; i++)
-                for(int j = 0;  j < 3; j++)
+            for(int i = 0; i < size.column; i++)
+                for(int j = 0;  j < size.row; j++)
                     GameField[i, j].Print();
         }
 
         public new void Clear()
         {
-            base.Clear();
-            GameField = new GameField[3, 3];
+            GameField = new GameField[size.column, size.row];
+            for (int i = 0; i < size.column; i++)
+            {
+                for (int j = 0; j < size.row; j++)
+                {
+                    GameField[i, j] = new GameField((size.column, size.row), winLength);
+                }
+            }
+        }
+
+        public bool CheckWin((int column, int row) field, (int column, int row) cell)
+        {
+            return GameField[field.column, field.row].CheckWin(cell.column, cell.row);
         }
     }
 }
