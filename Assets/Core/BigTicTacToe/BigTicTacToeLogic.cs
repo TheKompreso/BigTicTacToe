@@ -17,17 +17,17 @@ namespace Game.Core
         public bool Move((int column, int row) field, (int column, int row) cell)
         {
             if (activeField != null && activeField != field) return false;
-            activeField = cell;
             CellState state = activePlayer == Player.Cross ? CellState.cross : CellState.zero;
             if (gameField.SetCellState((field.column, field.row), (cell.column, cell.row), state))
             {
+                activeField = cell;
                 if (gameField.CheckWin((field.column, field.row), (cell.column, cell.row)))
                 {
                     Debug.Log("Выиграл кто-то!");
                 }
                 else
                 {
-                    activePlayer = Player.Cross == activePlayer ? Player.Zero : Player.Cross;
+                    activePlayer = activePlayer == Player.Cross ? Player.Zero : Player.Cross;
                     Debug.Log("Никто не выиграл");
                 }
             }
