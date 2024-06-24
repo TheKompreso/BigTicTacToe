@@ -1,21 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.Core;
+using Game.UI;
 using UnityEngine;
 
 namespace Game
 {
     public class ApplicationController : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        public static ApplicationController Instance {  get; private set; }
+        public GameLogic CurrentGame { get; private set; }
         
-        }
 
-        // Update is called once per frame
-        void Update()
+        private void Awake()
         {
-        
+            Instance = this;
+
+            // Игра
+            (int, int) fields = (6, 6);
+            (int, int) fieldSize = (6, 6);
+            int winLength = 5;
+            CurrentGame = new BigTicTacToeLogic(fields, fieldSize, winLength);
+            GameSpace.Instance.CreateBigField(fields, fieldSize);
         }
     }
 }

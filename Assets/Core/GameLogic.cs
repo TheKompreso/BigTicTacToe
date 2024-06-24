@@ -1,10 +1,25 @@
 using System;
-using Unity.IO.LowLevel.Unsafe;
 
 namespace Game.Core
 {
-    public class GameLogic
+    [Flags]
+    public enum GameStage
     {
-        BigGameField gameField;
+        CrossPlayer = 1 << 0,
+        ZeroPlayer = 1 << 1,
+        Win = 1 << 2,
+    }
+
+    public abstract class GameLogic
+    {
+        protected GameStage gameStage = GameStage.CrossPlayer;
+
+        public abstract bool Move(Move move, Action<CellState> callback, Action<CellState> parantCallback);
+
+        public Action MoveIsDone { get; set; }
+
+        #region Debug
+        public abstract void Print();
+        #endregion
     }
 }
