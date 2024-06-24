@@ -9,6 +9,7 @@ namespace Game.UI
     {
         Move move;
         Image image;
+        Field field;
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -20,7 +21,7 @@ namespace Game.UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            ApplicationController.Instance.CurrentGame.Move(move, SetState);
+            ApplicationController.Instance.CurrentGame.Move(move, SetState, SetParantState);
         }
 
 
@@ -28,19 +29,23 @@ namespace Game.UI
         {
         }
 
-        public void Init(Move move)
+        public void Init(Move move, Field field)
         {
             image = this.transform.GetChild(0).GetComponent<Image>();
             image.sprite = GameAssets.Instance.Image_None;
 
             this.move = move;
+            this.field = field;
         }
 
-        public void SetState(CellState state)
+        void SetState(CellState state)
         {
             if (state == CellState.cross) image.sprite = GameAssets.Instance.Image_Cross;
             else if (state == CellState.zero) image.sprite = GameAssets.Instance.Image_Zero;
             else image.sprite = GameAssets.Instance.Image_None;
         }
+
+        void SetParantState(CellState state) => field.SetState(state);
+
     }
 }

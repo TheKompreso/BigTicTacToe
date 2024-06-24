@@ -2,17 +2,19 @@ using System;
 
 namespace Game.Core
 {
-    public enum Player
+    [Flags]
+    public enum GameStage
     {
-        Cross,
-        Zero,
+        CrossPlayer = 1<<0,
+        ZeroPlayer = 1<<1,
+        Win = 1<<2,
     }
 
     public abstract class GameLogic
     {
-        protected Player activePlayer = Player.Cross;
+        protected GameStage gameStage = GameStage.CrossPlayer;
 
-        public abstract bool Move(Move move, Action<CellState> callback);
+        public abstract bool Move(Move move, Action<CellState> callback, Action<CellState> parantCallback);
 
         #region Debug
         public abstract void Print();

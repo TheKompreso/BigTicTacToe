@@ -72,28 +72,28 @@ namespace Game.Core
             // Первая диагональ
             length = 1; i = 1;
             while (CheckCell(column + i, row + i, cells[column, row])) { if (++i == winLength) break; }
-            length = 1; i = 1;
+            i = 1;
             while (CheckCell(column - i, row - i, cells[column, row])) { if (++i == winLength) break; }
             if (length == winLength) return true;
 
             // Вторая диагональ
             length = 1; i = 1;
             while (CheckCell(column - i, row + i, cells[column, row])) { if (++i == winLength) break; }
-            length = 1; i = 1;
+            i = 1;
             while (CheckCell(column + i, row - i, cells[column, row])) { if (++i == winLength) break; }
             if (length == winLength) return true;
 
             // Вертикаль
             length = 1; i = 1;
             while (CheckCell(column, row + i, cells[column, row])) { if (++i == winLength) break; }
-            length = 1; i = 1;
+            i = 1;
             while (CheckCell(column, row - i, cells[column, row])) { if (++i == winLength) break; }
             if (length == winLength) return true;
 
             // Горизонталь
             length = 1; i = 1;
             while (CheckCell(column + i, row, cells[column, row])) { if (++i == winLength) break; }
-            length = 1; i = 1;
+            i = 1;
             while (CheckCell(column - i, row, cells[column, row])) { if (++i == winLength) break; }
             if (length == winLength) return true;
             return false;
