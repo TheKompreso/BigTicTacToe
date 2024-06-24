@@ -13,16 +13,16 @@ namespace Game.UI
         public void InitFields((int column, int row) fieldsCount, (int column, int row) fieldsSize, BigTicTacToeMove moveTemplate)
         {
             (this as IField).SetGroupSize(GetComponent<GridLayoutGroup>(), fieldsSize, (70, 70));
-            this.GetComponent<RectTransform>().sizeDelta = 
+            this.GetComponent<RectTransform>().sizeDelta =
                 new Vector2(
-                    fieldsCount.column * fieldsSize.column * 80 + 30, 
-                    fieldsCount.row * fieldsSize.row* 80 + 30);
+                    fieldsCount.column * fieldsSize.column * 80 + 30,
+                    fieldsCount.row * fieldsSize.row * 80 + 30);
 
             size = fieldsCount;
             m_Fields = new Field[fieldsCount.column, fieldsCount.row];
-            for (int i = 0; i < fieldsCount.column; i++)
+            for (int j = 0; j < fieldsCount.row; j++)
             {
-                for (int j = 0; j < fieldsCount.row; j++)
+                for (int i = 0; i < fieldsCount.column; i++)
                 {
                     m_Fields[i, j] = Instantiate(GameAssets.Instance.field);
                     m_Fields[i, j].transform.SetParent(this.transform, false);
@@ -31,18 +31,18 @@ namespace Game.UI
             }
         }
 
-        private void ShowActiveFields((int column, int row)[] fields, bool active)
+        public void ShowActiveFields(((int column, int row)[] fields, bool active) space)
         {
-            for (int i = 0; i < size.column; i++)
+            for (int j = 0; j < size.row; j++)
             {
-                for (int j = 0; j < size.row; j++)
+                for (int i = 0; i < size.column; i++)
                 {
-                    m_Fields[i, j].SetActive(!active);
+                    m_Fields[i, j].SetActive(!space.active);
                 }
             }
-            for (int f = 0; f < fields.Length; f++)
+            for (int f = 0; f < space.fields.Length; f++)
             {
-                m_Fields[fields[f].column, fields[f].row].SetActive(active);
+                m_Fields[space.fields[f].column, space.fields[f].row].SetActive(space.active);
             }
         }
     }

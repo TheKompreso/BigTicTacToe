@@ -9,6 +9,7 @@ namespace Game.UI
     {
         [SerializeField] Transform cellsParant;
         [SerializeField] Image image;
+        [SerializeField] GameObject imageBlock;
         Cell[,] m_Cells;
 
         public GridLayoutGroup Group { get; set; }
@@ -16,9 +17,9 @@ namespace Game.UI
         public void InitCells(Move moveTemplate, (int column, int row) size)
         {
             m_Cells = new Cell[size.column, size.row];
-            for (int i = 0; i < size.column; i++)
+            for (int j = 0; j < size.row; j++)
             {
-                for (int j = 0; j < size.column; j++)
+                for (int i = 0; i < size.column; i++)
                 {
                     m_Cells[i, j] = Instantiate(GameAssets.Instance.cell);
                     m_Cells[i, j].transform.SetParent(cellsParant, false);
@@ -35,7 +36,7 @@ namespace Game.UI
 
         public void SetActive(bool active)
         {
-            throw new NotImplementedException();
+            imageBlock.SetActive(!active);
         }
     }
 }

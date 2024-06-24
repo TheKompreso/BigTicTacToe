@@ -23,14 +23,33 @@ namespace Game.UI
             bigFields[0].InitFields(fieldsCount, fieldsSize, new BigTicTacToeMove());
 
             Vector2 parantSize = transform.GetComponent<RectTransform>().sizeDelta;
-            float parantMinSide = parantSize.x > parantSize.y ? parantSize.y : parantSize.x;
             Vector2 childSize = bigFields[0].GetComponent<RectTransform>().sizeDelta;
-            float childMinSide = childSize.x > childSize.y ? childSize.y : childSize.x;
 
-            float newScale = parantMinSide / childMinSide;
+            float newScale;
+            float scaleFromX = parantSize.x / childSize.x;
+            float scaleFromY = parantSize.y / childSize.y;
+            if (scaleFromX * childSize.y <= parantSize.y)
+            {
+                if ((scaleFromY * childSize.x <= parantSize.x))
+                {
+                    newScale = scaleFromX > scaleFromY ? scaleFromX : scaleFromY;
+                }
+                else
+                {
+                    newScale = scaleFromX;
+                }
+            }
+            else newScale = scaleFromY;
+
             bigFields[0].GetComponent<RectTransform>().localScale = new Vector3(newScale, newScale, 1);
 
+            ApplicationController.Instance.CurrentGame.MoveIsDone += MoveIsDone;
 
+            void MoveIsDone()
+            {
+                bigFields[0].ShowActiveFields((ApplicationController.Instance.CurrentGame as BigTicTacToeLogic).GetActiveFields());
+            }
         }
+
     }
 }

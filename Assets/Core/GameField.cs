@@ -98,11 +98,11 @@ namespace Game.Core
             if (length >= winLength) return true;
             return false;
 
-            bool CheckCell(int column, int row, CellState state)
+            bool CheckCell(int x, int y, CellState state)
             {
                 try
                 {
-                    if (cells[column, row] == state)
+                    if (cells[x, y] == state)
                     {
                         length++;
                         return true;

@@ -14,10 +14,10 @@ namespace Game
         {
             Instance = this;
 
-            // Игра 3х3 (пока UI не адаптивный)
-            (int, int) fields = (4, 4);
-            (int, int) fieldSize = (4, 4);
-            int winLength = 3;
+            // Игра
+            (int, int) fields = (6, 6);
+            (int, int) fieldSize = (6, 6);
+            int winLength = 5;
             CurrentGame = new BigTicTacToeLogic(fields, fieldSize, winLength);
             GameSpace.Instance.CreateBigField(fields, fieldSize);
         }

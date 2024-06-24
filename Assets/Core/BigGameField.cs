@@ -7,7 +7,7 @@ namespace Game.Core
     public class BigGameField : GameField
     {
         [SerializeField] GameField[,] GameField;
-        (int column, int row) sizeField;
+        public (int column, int row) sizeField { get; private set; }
         public BigGameField((int column, int row) fieldsLength, (int column, int row) sizeField, int winLength) : base(fieldsLength, winLength)
         {
             this.sizeField = sizeField;
@@ -21,9 +21,9 @@ namespace Game.Core
         public GameField[,] GetFields()
         {
             GameField[,] outArray = new GameField[size.column, size.row];
-            for (int i = 0; i < size.column; i++)
+            for (int j = 0; j < size.row; j++)
             {
-                for (int j = 0; j < size.row; j++)
+                for (int i = 0; i < size.column; i++)
                 {
                     outArray[i, j] = GameField[i, j].Copy();
                 }
@@ -33,17 +33,17 @@ namespace Game.Core
 
         public new void Print()
         {
-            for(int i = 0; i < size.column; i++)
-                for(int j = 0;  j < size.row; j++)
+            for (int j = 0; j < size.row; j++)
+                for (int i = 0; i < size.column; i++)
                     GameField[i, j].Print();
         }
 
         public new void Clear()
         {
             GameField = new GameField[size.column, size.row];
-            for (int i = 0; i < size.column; i++)
+            for (int j = 0; j < size.row; j++)
             {
-                for (int j = 0; j < size.row; j++)
+                for (int i = 0; i < size.column; i++)
                 {
                     GameField[i, j] = new GameField((sizeField.column, sizeField.row), winLength);
                 }
@@ -63,6 +63,10 @@ namespace Game.Core
         public bool CheckClose((int column, int row) field)
         {
             return cells[field.column, field.row].HasFlag(CellState.close);
+        }
+        public CellState GetCellPlayer((int column, int row) field)
+        {
+            return (cells[field.column, field.row] & (CellState.cross | CellState.zero));
         }
     }
 }
