@@ -18,20 +18,18 @@ namespace Game.Core
         public bool Move((int column, int row) field, (int column, int row) cell, Action<CellState> action)
         {
             Debug.Log($"Move: Field({field}), Cell({cell}) | activeField = {activeField}");
-            if (activeField != null && activeField != field) return false;
+            if (activeField != null && activeField != field && gameField.CheckClose(activeField.Value) == false) return false;
+            if(gameField.CheckClose(field) == true) return false;
             CellState state = activePlayer == Player.Cross ? CellState.cross : CellState.zero;
             if (gameField.SetCellState((field.column, field.row), (cell.column, cell.row), state))
             {
                 activeField = cell;
                 if (gameField.CheckWin((field.column, field.row), (cell.column, cell.row)))
                 {
-                    // Выиграл кто-то!
+                    gameField.SetWinner((field.column, field.row), state);
                 }
-                else
-                {
-                    activePlayer = activePlayer == Player.Cross ? Player.Zero : Player.Cross;
-                    // Никто не выиграл!
-                }
+                activePlayer = activePlayer == Player.Cross ? Player.Zero : Player.Cross;
+
                 action(state);
             }
             return false;

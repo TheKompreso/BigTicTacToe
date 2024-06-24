@@ -54,5 +54,15 @@ namespace Game.Core
         {
             return GameField[field.column, field.row].CheckWin(cell.column, cell.row);
         }
+
+        public void SetWinner((int column, int row) field, CellState state)
+        {
+            cells[field.column, field.row] = state | CellState.close;
+        }
+
+        public bool CheckClose((int column, int row) field)
+        {
+            return cells[field.column, field.row].HasFlag(CellState.close);
+        }
     }
 }
