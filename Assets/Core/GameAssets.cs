@@ -11,6 +11,7 @@ namespace Game
         public Sprite Image_Zero;
 
         public Cell cell;
+        public Field field;
 
         public static GameAssets Instance;
         private void Awake()

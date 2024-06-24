@@ -12,6 +12,7 @@ namespace Game.UI
         [Header("Cell")]
         [SerializeField] int cell_column;
         [SerializeField] int cell_row;
+
         Image image;
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -33,7 +34,7 @@ namespace Game.UI
 
         public void Init((int column, int row) field, (int column, int row) cell)
         {
-            image = GetComponent<Image>();
+            image = this.transform.GetChild(0).GetComponent<Image>();
             image.sprite = GameAssets.Instance.Image_None;
 
             field_column = field.column;
