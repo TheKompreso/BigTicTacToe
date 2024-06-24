@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using UnityEngine;
 
 namespace Game.Core
@@ -8,9 +7,10 @@ namespace Game.Core
     public class BigGameField : GameField
     {
         [SerializeField] GameField[,] GameField;
-
-        public BigGameField((int column, int row) size, int winLength) : base(size, winLength)
+        (int column, int row) sizeField;
+        public BigGameField((int column, int row) fieldsLength, (int column, int row) sizeField, int winLength) : base(fieldsLength, winLength)
         {
+            this.sizeField = sizeField;
             Clear();
         }
 
@@ -45,7 +45,7 @@ namespace Game.Core
             {
                 for (int j = 0; j < size.row; j++)
                 {
-                    GameField[i, j] = new GameField((size.column, size.row), winLength);
+                    GameField[i, j] = new GameField((sizeField.column, sizeField.row), winLength);
                 }
             }
         }

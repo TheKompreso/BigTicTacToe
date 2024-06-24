@@ -12,6 +12,7 @@ namespace Game
 
         public Cell cell;
         public Field field;
+        public BigField bigField;
 
         public static GameAssets Instance;
         private void Awake()
