@@ -1,3 +1,4 @@
+using Game.Core;
 using UnityEngine;
 
 namespace Game.UI
@@ -14,17 +15,17 @@ namespace Game.UI
 
         private void Awake()
         {
-            InitFields();
+            InitFields(new BigTicTacToeMove());
         }
 
-        private void InitFields()
+        private void InitFields(BigTicTacToeMove moveTemplate)
         {
             m_Fields = new Field[column_length * row_length];
             for (int i = 0; i < m_Fields.Length; i++)
             {
                 m_Fields[i] = Instantiate(GameAssets.Instance.field);
                 m_Fields[i].transform.SetParent(this.transform, false);
-                m_Fields[i].InitCells((i % column_length, i / column_length), (column_fieldsize, row_fieldsize));
+                m_Fields[i].InitCells(moveTemplate.DeepClone().SetField((i % column_length, i / column_length)), (column_fieldsize, row_fieldsize));
             }
         }
     }

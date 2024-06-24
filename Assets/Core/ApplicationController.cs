@@ -5,18 +5,12 @@ namespace Game
 {
     public class ApplicationController : MonoBehaviour
     {
-        GameLogic game;
+        public static ApplicationController Instance {  get; private set; }
+        public GameLogic CurrentGame { get; private set; }
         private void Awake()
         {
-            game = new BigTicTacToeLogic();
-
-            game.Move(new BigTicTacToeMove((0, 0), (0, 0)));
-            game.Move(new BigTicTacToeMove((0, 0), (1, 0)));
-            game.Move(new BigTicTacToeMove((0, 0), (1, 1)));
-            game.Move(new BigTicTacToeMove((0, 0), (2, 0)));
-            game.Move(new BigTicTacToeMove((0, 0), (2, 2)));
-
-            game.Print();
+            Instance = this;
+            CurrentGame = new BigTicTacToeLogic();
         }
     }
 }

@@ -1,4 +1,4 @@
-using Debug = UnityEngine.Debug;
+using System;
 
 namespace Game.Core
 {
@@ -12,7 +12,7 @@ namespace Game.Core
     {
         protected Player activePlayer = Player.Cross;
 
-        public abstract bool Move(Move move);
+        public abstract bool Move(Move move, Action<CellState> callback);
 
         #region Debug
         public abstract void Print();

@@ -1,3 +1,4 @@
+using Game.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -6,13 +7,7 @@ namespace Game.UI
 {
     public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {
-        [Header("Field")]
-        [SerializeField] int field_column;
-        [SerializeField] int field_row;
-        [Header("Cell")]
-        [SerializeField] int cell_column;
-        [SerializeField] int cell_row;
-
+        Move move;
         Image image;
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -25,6 +20,7 @@ namespace Game.UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            ApplicationController.Instance.CurrentGame.Move(move, SetState);
         }
 
 
@@ -32,15 +28,19 @@ namespace Game.UI
         {
         }
 
-        public void Init((int column, int row) field, (int column, int row) cell)
+        public void Init(Move move)
         {
             image = this.transform.GetChild(0).GetComponent<Image>();
             image.sprite = GameAssets.Instance.Image_None;
 
-            field_column = field.column;
-            field_row = field.row;
-            cell_column = cell.column;
-            cell_row = cell.row;
+            this.move = move;
+        }
+
+        public void SetState(CellState state)
+        {
+            if (state == CellState.cross) image.sprite = GameAssets.Instance.Image_Cross;
+            else if (state == CellState.zero) image.sprite = GameAssets.Instance.Image_Zero;
+            else image.sprite = GameAssets.Instance.Image_None;
         }
     }
 }

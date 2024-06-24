@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game.Core
@@ -13,9 +14,10 @@ namespace Game.Core
             activeField = null;
         }
 
-        public override bool Move(Move move) => Move((move as BigTicTacToeMove).field, (move as BigTicTacToeMove).cell);
-        public bool Move((int column, int row) field, (int column, int row) cell)
+        public override bool Move(Move move, Action<CellState> action) => Move((move as BigTicTacToeMove).field, (move as BigTicTacToeMove).cell, action);
+        public bool Move((int column, int row) field, (int column, int row) cell, Action<CellState> action)
         {
+            Debug.Log($"Move: Field({field}), Cell({cell}) | activeField = {activeField}");
             if (activeField != null && activeField != field) return false;
             CellState state = activePlayer == Player.Cross ? CellState.cross : CellState.zero;
             if (gameField.SetCellState((field.column, field.row), (cell.column, cell.row), state))
@@ -23,13 +25,14 @@ namespace Game.Core
                 activeField = cell;
                 if (gameField.CheckWin((field.column, field.row), (cell.column, cell.row)))
                 {
-                    Debug.Log("Выиграл кто-то!");
+                    // Выиграл кто-то!
                 }
                 else
                 {
                     activePlayer = activePlayer == Player.Cross ? Player.Zero : Player.Cross;
-                    Debug.Log("Никто не выиграл");
+                    // Никто не выиграл!
                 }
+                action(state);
             }
             return false;
         }
