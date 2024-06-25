@@ -17,9 +17,5 @@ namespace Game.Core
         public abstract bool Move(Move move, Action<CellState> callback, Action<CellState> parantCallback);
 
         public Action MoveIsDone { get; set; }
-
-        #region Debug
-        public abstract void Print();
-        #endregion
     }
 }

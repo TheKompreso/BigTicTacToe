@@ -31,13 +31,6 @@ namespace Game.Core
             return outArray;
         }
 
-        public new void Print()
-        {
-            for (int j = 0; j < size.row; j++)
-                for (int i = 0; i < size.column; i++)
-                    GameField[i, j].Print();
-        }
-
         public new void Clear()
         {
             GameField = new GameField[size.column, size.row];

@@ -8,18 +8,32 @@ namespace Game
     {
         public static ApplicationController Instance {  get; private set; }
         public GameLogic CurrentGame { get; private set; }
-        
+
+        [SerializeField] GameSpace gameSpace;
+
 
         private void Awake()
         {
             Instance = this;
+        }
 
-            // Игра
-            (int, int) fields = (6, 6);
-            (int, int) fieldSize = (6, 6);
-            int winLength = 5;
+        public void StartClassic()
+        {
+            (int, int) fieldSize = (3, 3);
+            int winLength = 3;
+            CurrentGame = new ClassicLogic(fieldSize, winLength);
+            gameSpace.gameObject.SetActive(true);
+            gameSpace.CreateClassicField(fieldSize);
+        }
+
+        public void StartBigClassic()
+        {
+            (int, int) fields = (3, 3);
+            (int, int) fieldSize = (3, 3);
+            int winLength = 3;
             CurrentGame = new BigTicTacToeLogic(fields, fieldSize, winLength);
-            GameSpace.Instance.CreateBigField(fields, fieldSize);
+            gameSpace.gameObject.SetActive(true);
+            gameSpace.CreateBigField(fields, fieldSize);
         }
     }
 }

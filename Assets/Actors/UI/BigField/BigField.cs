@@ -26,7 +26,7 @@ namespace Game.UI
                 {
                     m_Fields[i, j] = Instantiate(GameAssets.Instance.field);
                     m_Fields[i, j].transform.SetParent(this.transform, false);
-                    m_Fields[i, j].InitCells(moveTemplate.DeepClone().SetField((i, j)), (fieldsSize.column, fieldsSize.row));
+                    m_Fields[i, j].InitCells((fieldsSize.column, fieldsSize.row), moveTemplate.DeepClone().SetField((i, j)));
                 }
             }
         }

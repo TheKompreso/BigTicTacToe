@@ -6,24 +6,38 @@ namespace Game.UI
 {
     public class GameSpace : MonoBehaviour
     {
-        public static GameSpace Instance { get; private set; }
-
-        Field[] fields;
-        BigField[] bigFields;
-        private void Awake()
-        {
-            Instance = this;
-        }
+        Field fields;
+        BigField bigFields;
 
         public void CreateBigField((int, int) fieldsCount, (int, int) fieldsSize)
         {
-            bigFields = new BigField[1];
-            bigFields[0] = Instantiate(GameAssets.Instance.bigField);
-            bigFields[0].transform.SetParent(transform, false);
-            bigFields[0].InitFields(fieldsCount, fieldsSize, new BigTicTacToeMove());
+            bigFields = Instantiate(GameAssets.Instance.bigField);
+            bigFields.transform.SetParent(transform, false);
+            bigFields.InitFields(fieldsCount, fieldsSize, new BigTicTacToeMove());
+            
+            ChangeChildScale(transform.GetComponent<RectTransform>(), bigFields.GetComponent<RectTransform>());
 
-            Vector2 parantSize = transform.GetComponent<RectTransform>().sizeDelta;
-            Vector2 childSize = bigFields[0].GetComponent<RectTransform>().sizeDelta;
+            ApplicationController.Instance.CurrentGame.MoveIsDone += MoveIsDone;
+
+            void MoveIsDone()
+            {
+                bigFields.ShowActiveFields((ApplicationController.Instance.CurrentGame as BigTicTacToeLogic).GetActiveFields());
+            }
+        }
+
+        public void CreateClassicField((int, int) fieldsSize)
+        {
+            fields = Instantiate(GameAssets.Instance.field);
+            fields.transform.SetParent(transform, false);
+            fields.InitCells(fieldsSize, new ClassicMove());
+
+            ChangeChildScale(transform.GetComponent<RectTransform>(), fields.GetComponent<RectTransform>());
+        }
+
+        void ChangeChildScale(RectTransform parant, RectTransform child)
+        {
+            Vector2 parantSize = parant.sizeDelta;
+            Vector2 childSize = child.sizeDelta;
 
             float newScale;
             float scaleFromX = parantSize.x / childSize.x;
@@ -41,17 +55,8 @@ namespace Game.UI
             }
             else newScale = scaleFromY;
 
-            bigFields[0].GetComponent<RectTransform>().localScale = new Vector3(newScale, newScale, 1);
-            this.GetComponent<RectTransform>().sizeDelta =
-                new Vector2(childSize.x*newScale, childSize.y*newScale);
-
-            ApplicationController.Instance.CurrentGame.MoveIsDone += MoveIsDone;
-
-            void MoveIsDone()
-            {
-                bigFields[0].ShowActiveFields((ApplicationController.Instance.CurrentGame as BigTicTacToeLogic).GetActiveFields());
-            }
+            child.localScale = new Vector3(newScale, newScale, 1);
+            parant.sizeDelta = new Vector2(childSize.x * newScale, childSize.y * newScale);
         }
-
     }
 }

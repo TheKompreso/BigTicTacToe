@@ -112,14 +112,5 @@ namespace Game.Core
                 catch (Exception) { return false; }
             }
         }
-
-        #region Debug
-        internal void Print()
-        {
-            Debug.Log($"{CP(cells[0, 0])} {CP(cells[1, 0])} {CP(cells[2, 0])}\n" +
-                      $"{CP(cells[0, 1])} {CP(cells[1, 1])} {CP(cells[2, 1])}\n" +
-                      $"{CP(cells[0, 2])} {CP(cells[1, 2])} {CP(cells[2, 2])}\n");
-        }
-        #endregion
     }
 }
