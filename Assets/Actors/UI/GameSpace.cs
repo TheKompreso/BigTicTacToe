@@ -42,6 +42,8 @@ namespace Game.UI
             else newScale = scaleFromY;
 
             bigFields[0].GetComponent<RectTransform>().localScale = new Vector3(newScale, newScale, 1);
+            this.GetComponent<RectTransform>().sizeDelta =
+                new Vector2(childSize.x*newScale, childSize.y*newScale);
 
             ApplicationController.Instance.CurrentGame.MoveIsDone += MoveIsDone;
 
