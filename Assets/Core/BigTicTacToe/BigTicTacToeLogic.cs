@@ -89,5 +89,12 @@ namespace Game.Core
             }
             //return (new []{ (0, 0) }, false);
         }
+
+        public override void Clear()
+        {
+            base.Clear();
+            gameField.Clear();
+            activeField = null;
+        }
     }
 }

@@ -1,16 +1,20 @@
 using Game.Core;
 using Game.UI;
+using System;
 using UnityEngine;
 
 namespace Game
 {
     public class ApplicationController : MonoBehaviour
     {
-        public static ApplicationController Instance {  get; private set; }
+        public static ApplicationController Instance { get; private set; }
         public GameLogic CurrentGame { get; private set; }
 
         [SerializeField] GameSpace gameSpace;
+        [SerializeField] UIElement mainMenu;
 
+        // Прикол
+        Action restartAction;
 
         private void Awake()
         {
@@ -19,21 +23,40 @@ namespace Game
 
         public void StartClassic()
         {
-            (int, int) fieldSize = (3, 3);
-            int winLength = 3;
+            StartClassic((3, 3), 3);
+        }
+        public void StartBigClassic()
+        {
+            StartBigClassic((3, 3), 3);
+        }
+
+        public void StartClassic((int, int) fieldSize, int winLength)
+        {
+            restartAction = () => StartClassic(fieldSize, winLength);
+
             CurrentGame = new ClassicLogic(fieldSize, winLength);
             gameSpace.gameObject.SetActive(true);
             gameSpace.CreateClassicField(fieldSize);
         }
-
-        public void StartBigClassic()
+        public void StartBigClassic((int, int) fieldSize, int winLength)
         {
-            (int, int) fields = (3, 3);
-            (int, int) fieldSize = (3, 3);
-            int winLength = 3;
-            CurrentGame = new BigTicTacToeLogic(fields, fieldSize, winLength);
+            restartAction = () => StartBigClassic(fieldSize, winLength);
+
+            CurrentGame = new BigTicTacToeLogic(fieldSize, fieldSize, winLength);
             gameSpace.gameObject.SetActive(true);
-            gameSpace.CreateBigField(fields, fieldSize);
+            gameSpace.CreateBigField(fieldSize, fieldSize);
+        }
+        public void BackToMenuFromGameSpace()
+        {
+            gameSpace.Clear();
+            gameSpace.gameObject.SetActive(false);
+            mainMenu.Show();
+        }
+
+        public void RestartGame()
+        {
+            gameSpace.Clear();
+            restartAction.Invoke();
         }
     }
 }

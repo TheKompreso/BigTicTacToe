@@ -6,6 +6,8 @@ namespace Game.UI
 {
     public class GameSpace : MonoBehaviour
     {
+        [SerializeField] private GameObject space;
+
         Field fields;
         BigField bigFields;
 
@@ -14,8 +16,8 @@ namespace Game.UI
             bigFields = Instantiate(GameAssets.Instance.bigField);
             bigFields.transform.SetParent(transform, false);
             bigFields.InitFields(fieldsCount, fieldsSize, new BigTicTacToeMove());
-            
-            ChangeChildScale(transform.GetComponent<RectTransform>(), bigFields.GetComponent<RectTransform>());
+
+            ChangeChildScale(space.transform.GetComponent<RectTransform>(), bigFields.GetComponent<RectTransform>());
 
             ApplicationController.Instance.CurrentGame.MoveIsDone += MoveIsDone;
 
@@ -28,10 +30,18 @@ namespace Game.UI
         public void CreateClassicField((int, int) fieldsSize)
         {
             fields = Instantiate(GameAssets.Instance.field);
-            fields.transform.SetParent(transform, false);
+            fields.transform.SetParent(space.transform, false);
             fields.InitCells(fieldsSize, new ClassicMove());
 
-            ChangeChildScale(transform.GetComponent<RectTransform>(), fields.GetComponent<RectTransform>());
+            ChangeChildScale(space.transform.GetComponent<RectTransform>(), fields.GetComponent<RectTransform>());
+        }
+
+        public void Clear()
+        {
+            for (int i = 0; i < space.transform.childCount; i++)
+            {
+                Destroy(space.transform.GetChild(i).gameObject);
+            }
         }
 
         void ChangeChildScale(RectTransform parant, RectTransform child)

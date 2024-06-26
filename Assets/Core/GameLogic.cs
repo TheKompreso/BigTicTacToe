@@ -17,5 +17,10 @@ namespace Game.Core
         public abstract bool Move(Move move, Action<CellState> callback, Action<CellState> parantCallback);
 
         public Action MoveIsDone { get; set; }
+
+        public virtual void Clear()
+        {
+            gameStage = GameStage.CrossPlayer;
+        }
     }
 }

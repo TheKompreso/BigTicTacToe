@@ -4,13 +4,13 @@ namespace Game.UI
 {
     public class ChangePage : MonoBehaviour
     {
-        [SerializeField] private GameObject oldPage;
-        [SerializeField] private GameObject newPage;
+        [SerializeField] private UIElement oldPage;
+        [SerializeField] private UIElement newPage;
 
         public void Click()
         {
-            oldPage?.SetActive(false);
-            newPage?.SetActive(true);
+            oldPage?.Hide();
+            newPage?.Show();
         }
     }
 }

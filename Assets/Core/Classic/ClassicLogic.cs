@@ -1,3 +1,4 @@
+using Game.UI;
 using System;
 using UnityEngine;
 
@@ -33,6 +34,12 @@ namespace Game.Core
                 return true;
             }
             return false;
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            gameField.Clear();
         }
     }
 }
