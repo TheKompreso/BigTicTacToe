@@ -112,5 +112,16 @@ namespace Game.Core
                 catch (Exception) { return false; }
             }
         }
+        public bool CheckBlock()
+        {
+            for (int row = 0; row < size.row; row++)
+            {
+                for (int column = 0; column < size.column; column++)
+                {
+                    if (cells[column, row] == CellState.none) return false;
+                }
+            }
+            return true;
+        }
     }
 }

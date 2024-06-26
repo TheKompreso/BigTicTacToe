@@ -47,6 +47,10 @@ namespace Game.Core
         {
             return GameField[field.column, field.row].CheckWin(cell.column, cell.row);
         }
+        public bool CheckBlock(int column, int row)
+        {
+            return GameField[column, row].CheckBlock();
+        }
 
         public void SetWinner((int column, int row) field, CellState state)
         {
@@ -61,5 +65,6 @@ namespace Game.Core
         {
             return (cells[field.column, field.row] & (CellState.cross | CellState.zero));
         }
+
     }
 }

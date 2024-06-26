@@ -40,6 +40,10 @@ namespace Game.Core
                         return true;
                     }
                 }
+                else if (gameField.CheckBlock(field.column, field.row))
+                {
+                    gameField.SetWinner((field.column, field.row), CellState.none);
+                }
                 gameStage = gameStage == GameStage.CrossPlayer ? GameStage.ZeroPlayer : GameStage.CrossPlayer;
                 MoveIsDone?.Invoke();
                 return true;
