@@ -15,8 +15,8 @@ namespace Game.UI
             (this as IField).SetGroupSize(GetComponent<GridLayoutGroup>(), fieldsSize, (70, 70));
             this.GetComponent<RectTransform>().sizeDelta =
                 new Vector2(
-                    fieldsCount.column * fieldsSize.column * 80 + 30,
-                    fieldsCount.row * fieldsSize.row * 80 + 30);
+                    fieldsCount.column * fieldsSize.column * 70 + fieldsCount.column * 10 + 20,
+                    fieldsCount.row * fieldsSize.row * 70 + fieldsCount.row * 10 + 20);
 
             size = fieldsCount;
             m_Fields = new Field[fieldsCount.column, fieldsCount.row];
@@ -26,7 +26,7 @@ namespace Game.UI
                 {
                     m_Fields[i, j] = Instantiate(GameAssets.Instance.field);
                     m_Fields[i, j].transform.SetParent(this.transform, false);
-                    m_Fields[i, j].InitCells(moveTemplate.DeepClone().SetField((i, j)), (fieldsSize.column, fieldsSize.row));
+                    m_Fields[i, j].InitCells((fieldsSize.column, fieldsSize.row), moveTemplate.DeepClone().SetField((i, j)));
                 }
             }
         }

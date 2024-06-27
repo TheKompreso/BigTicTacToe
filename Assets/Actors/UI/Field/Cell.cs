@@ -1,4 +1,5 @@
 using Game.Core;
+using Game.Sound;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,7 +22,10 @@ namespace Game.UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            ApplicationController.Instance.CurrentGame.Move(move, SetState, SetParantState);
+            if (ApplicationController.Instance.CurrentGame.Move(move, SetState, SetParantState))
+            {
+                SoundController.Instance.PlaySound(Sounds.painting);
+            }
         }
 
 

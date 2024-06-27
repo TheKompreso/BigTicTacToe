@@ -31,13 +31,6 @@ namespace Game.Core
             return outArray;
         }
 
-        public new void Print()
-        {
-            for (int j = 0; j < size.row; j++)
-                for (int i = 0; i < size.column; i++)
-                    GameField[i, j].Print();
-        }
-
         public new void Clear()
         {
             GameField = new GameField[size.column, size.row];
@@ -54,6 +47,10 @@ namespace Game.Core
         {
             return GameField[field.column, field.row].CheckWin(cell.column, cell.row);
         }
+        public bool CheckBlock(int column, int row)
+        {
+            return GameField[column, row].CheckBlock();
+        }
 
         public void SetWinner((int column, int row) field, CellState state)
         {
@@ -68,5 +65,6 @@ namespace Game.Core
         {
             return (cells[field.column, field.row] & (CellState.cross | CellState.zero));
         }
+
     }
 }

@@ -112,14 +112,16 @@ namespace Game.Core
                 catch (Exception) { return false; }
             }
         }
-
-        #region Debug
-        internal void Print()
+        public bool CheckBlock()
         {
-            Debug.Log($"{CP(cells[0, 0])} {CP(cells[1, 0])} {CP(cells[2, 0])}\n" +
-                      $"{CP(cells[0, 1])} {CP(cells[1, 1])} {CP(cells[2, 1])}\n" +
-                      $"{CP(cells[0, 2])} {CP(cells[1, 2])} {CP(cells[2, 2])}\n");
+            for (int row = 0; row < size.row; row++)
+            {
+                for (int column = 0; column < size.column; column++)
+                {
+                    if (cells[column, row] == CellState.none) return false;
+                }
+            }
+            return true;
         }
-        #endregion
     }
 }

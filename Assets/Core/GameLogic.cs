@@ -18,8 +18,9 @@ namespace Game.Core
 
         public Action MoveIsDone { get; set; }
 
-        #region Debug
-        public abstract void Print();
-        #endregion
+        public virtual void Clear()
+        {
+            gameStage = GameStage.CrossPlayer;
+        }
     }
 }

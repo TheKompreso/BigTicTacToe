@@ -20,7 +20,6 @@ namespace Game.Core
 
         public bool Move((int column, int row) field, (int column, int row) cell, Action<CellState> action, Action<CellState> parantCallback)
         {
-            //Debug.Log($"Move: Field({field}), Cell({cell}) | activeField = {activeField}");
             if (gameStage.HasFlag(GameStage.Win)) return false;
             if (activeField != null && activeField != field && gameField.CheckClose(activeField.Value) == false) return false;
             if (gameField.CheckClose(field) == true) return false;
@@ -41,16 +40,15 @@ namespace Game.Core
                         return true;
                     }
                 }
+                else if (gameField.CheckBlock(field.column, field.row))
+                {
+                    gameField.SetWinner((field.column, field.row), CellState.none);
+                }
                 gameStage = gameStage == GameStage.CrossPlayer ? GameStage.ZeroPlayer : GameStage.CrossPlayer;
+                MoveIsDone?.Invoke();
+                return true;
             }
-
-            MoveIsDone?.Invoke();
-            return true;
-        }
-
-        public override void Print()
-        {
-            gameField.Print();
+            return false;
         }
 
         public ((int column, int row)[] fields, bool active) GetActiveFields()
@@ -94,6 +92,13 @@ namespace Game.Core
                 }
             }
             //return (new []{ (0, 0) }, false);
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            gameField.Clear();
+            activeField = null;
         }
     }
 }

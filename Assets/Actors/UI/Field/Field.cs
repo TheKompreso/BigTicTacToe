@@ -14,8 +14,13 @@ namespace Game.UI
 
         public GridLayoutGroup Group { get; set; }
 
-        public void InitCells(Move moveTemplate, (int column, int row) size)
+        public void InitCells((int column, int row) size, Move moveTemplate)
         {
+            this.GetComponent<RectTransform>().sizeDelta =
+                new Vector2(
+                    size.column * 70 + size.column * 5 + 10,
+                    size.row * 70 + size.row * 5 + 10);
+
             m_Cells = new Cell[size.column, size.row];
             for (int j = 0; j < size.row; j++)
             {
