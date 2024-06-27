@@ -21,14 +21,18 @@ namespace Game.Core
         public GameField[,] GetFields()
         {
             GameField[,] outArray = new GameField[size.column, size.row];
-            for (int j = 0; j < size.row; j++)
+            for (int i = 0; i < size.column; i++)
             {
-                for (int i = 0; i < size.column; i++)
+                for (int j = 0; j < size.row; j++)
                 {
                     outArray[i, j] = GameField[i, j].Copy();
                 }
             }
             return outArray;
+        }
+        public GameField GetField(int column, int row)
+        {
+            return GameField[column, row].Copy();
         }
 
         public new void Clear()
@@ -65,6 +69,5 @@ namespace Game.Core
         {
             return (cells[field.column, field.row] & (CellState.cross | CellState.zero));
         }
-
     }
 }

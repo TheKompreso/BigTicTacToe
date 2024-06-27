@@ -10,6 +10,12 @@ namespace Game.UI
         Field[,] m_Fields;
         (int column, int row) size;
 
+        public void MakeMove(Move move)
+        {
+            BigTicTacToeMove bigMove = move as BigTicTacToeMove;
+            m_Fields[bigMove.field.column, bigMove.field.row].MakeMove(bigMove);
+        }
+
         public void InitFields((int column, int row) fieldsCount, (int column, int row) fieldsSize, BigTicTacToeMove moveTemplate)
         {
             (this as IField).SetGroupSize(GetComponent<GridLayoutGroup>(), fieldsSize, (70, 70));

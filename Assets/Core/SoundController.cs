@@ -7,6 +7,7 @@ namespace Game.Sound
         click,
         hover,
         painting,
+        win
     }
 
     public class SoundController : MonoBehaviour
@@ -16,6 +17,7 @@ namespace Game.Sound
         [SerializeField] private AudioClip ClickSound;
         [SerializeField] private AudioClip HoverSound;
         [SerializeField] private AudioClip PaintingSound;
+        [SerializeField] private AudioClip WinSound;
 
         public static SoundController Instance { get; private set; }
         private void Awake()
@@ -31,6 +33,7 @@ namespace Game.Sound
                 case Sounds.click: m_AudioSource.PlayOneShot(ClickSound); break;
                 case Sounds.hover: m_AudioSource.PlayOneShot(HoverSound); break;
                 case Sounds.painting: m_AudioSource.PlayOneShot(PaintingSound); break;
+                case Sounds.win: m_AudioSource.PlayOneShot(WinSound); break;
             }
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Core
@@ -20,6 +21,7 @@ namespace Game.Core
         [SerializeField] protected (int column, int row) size;
         [SerializeField] protected int winLength;
 
+        private GameField() { }
         public GameField((int column, int row) size, int winLength)
         {
             this.size = size;
@@ -50,10 +52,12 @@ namespace Game.Core
 
         public GameField Copy()
         {
-            var copy = new GameField(size, winLength)
+            var copy = new GameField()
             {
                 FieldState = FieldState,
-                cells = GetCells()
+                cells = GetCells(),
+                size = size,
+                winLength = winLength
             };
             return copy;
         }
@@ -122,6 +126,21 @@ namespace Game.Core
                 }
             }
             return true;
+        }
+
+        public (int column, int row)[] GetMoves()
+        {
+            List<(int,int)> moves = new();
+
+            for (int row = 0; row < size.column; row++)
+            {
+                for (int column = 0; column < size.column; column++)
+                {
+                    if (cells[column, row] != CellState.none) continue;
+                    moves.Add((column, row));
+                }
+            }
+            return moves.ToArray();
         }
     }
 }

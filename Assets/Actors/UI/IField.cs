@@ -1,3 +1,4 @@
+using Game.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,5 +12,7 @@ namespace Game
         {
             group.cellSize = new Vector2(cellsCount.column * size.column, cellsCount.row * size.row);
         }
+
+        public abstract void MakeMove(Move move);
     }
 }

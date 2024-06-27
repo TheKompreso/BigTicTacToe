@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.Core
@@ -37,6 +38,7 @@ namespace Game.Core
                     {
                         gameStage |= GameStage.Win;
                         MoveIsDone?.Invoke();
+                        Win?.Invoke();
                         return true;
                     }
                 }
@@ -99,6 +101,34 @@ namespace Game.Core
             base.Clear();
             gameField.Clear();
             activeField = null;
+        }
+
+        public override Move GetAIMove(int deep = 1)
+        {
+            List<(int, int)> fieldsPos;
+            ((int column, int row)[] fields, bool active) activeFields = GetActiveFields();
+            if (activeFields.active == true)
+            {
+                fieldsPos = new List<(int, int)>(activeFields.fields);
+            }
+            else
+            {
+                fieldsPos = new List<(int, int)>(gameField.GetMoves());
+                for (int i = 0; i < activeFields.fields.Length; i++)
+                {
+                    fieldsPos.Remove(activeFields.fields[i]);
+                }
+            }
+
+
+            (int column, int row) fieldPos = fieldsPos[UnityEngine.Random.Range(0, fieldsPos.Count)];
+            GameField field = gameField.GetField(fieldPos.column, fieldPos.row);
+            (int column, int row)[] moves = field.GetMoves();
+            return new BigTicTacToeMove()
+            {
+                cell = moves[UnityEngine.Random.Range(0, moves.Length)],
+                field = fieldPos
+            };
         }
     }
 }

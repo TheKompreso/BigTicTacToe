@@ -1,5 +1,6 @@
 using Game.UI;
 using System;
+using System.Drawing;
 using UnityEngine;
 
 namespace Game.Core
@@ -27,6 +28,7 @@ namespace Game.Core
                     parantCallback(state);
                     gameStage |= GameStage.Win;
                     MoveIsDone?.Invoke();
+                    Win?.Invoke();
                     return true;
                 }
                 gameStage = gameStage == GameStage.CrossPlayer ? GameStage.ZeroPlayer : GameStage.CrossPlayer;
@@ -40,6 +42,26 @@ namespace Game.Core
         {
             base.Clear();
             gameField.Clear();
+        }
+
+        public override Move GetAIMove(int deep = 1)
+        {
+            //(int column, int row) bestMove;
+            //GameField gameField = this.gameField.Copy();
+            (int column, int row)[] bestMoves = gameField.GetMoves();
+            return new ClassicMove() { cell = bestMoves[UnityEngine.Random.Range(0, bestMoves.Length)] };
+            /*
+            int CalcMove(GameField field, int deep)
+            {
+                for(int row = field.size.row; row < field.size.column; row++)
+                {
+                    for(int column = field.size.column; column < field.size.column; column++)
+                    {
+                        if (field.cells[column, row] != CellState.none) continue;
+                        // А тут продолжим
+                    }
+                }
+            }*/
         }
     }
 }

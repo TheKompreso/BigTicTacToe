@@ -1,4 +1,5 @@
 using Game.Core;
+using Game.Sound;
 using System;
 using UnityEngine;
 
@@ -8,32 +9,45 @@ namespace Game.UI
     {
         [SerializeField] private GameObject space;
 
-        Field fields;
-        BigField bigFields;
+        IField field;
+
+        public void MakeMove(Move move)
+        {
+            field.MakeMove(move);
+        }
 
         public void CreateBigField((int, int) fieldsCount, (int, int) fieldsSize)
         {
-            bigFields = Instantiate(GameAssets.Instance.bigField);
-            bigFields.transform.SetParent(transform, false);
-            bigFields.InitFields(fieldsCount, fieldsSize, new BigTicTacToeMove());
+            BigField bigField;
+            bigField = Instantiate(GameAssets.Instance.bigField);
+            bigField.transform.SetParent(transform, false);
+            bigField.InitFields(fieldsCount, fieldsSize, new BigTicTacToeMove());
 
-            ChangeChildScale(space.transform.GetComponent<RectTransform>(), bigFields.GetComponent<RectTransform>());
+            ChangeChildScale(space.transform.GetComponent<RectTransform>(), bigField.GetComponent<RectTransform>());
 
             ApplicationController.Instance.CurrentGame.MoveIsDone += MoveIsDone;
+            ApplicationController.Instance.CurrentGame.Win += () => SoundController.Instance.PlaySound(Sounds.win);
 
             void MoveIsDone()
             {
-                bigFields.ShowActiveFields((ApplicationController.Instance.CurrentGame as BigTicTacToeLogic).GetActiveFields());
+                bigField.ShowActiveFields((ApplicationController.Instance.CurrentGame as BigTicTacToeLogic).GetActiveFields());
             }
+
+            field = bigField;
         }
 
         public void CreateClassicField((int, int) fieldsSize)
         {
-            fields = Instantiate(GameAssets.Instance.field);
-            fields.transform.SetParent(space.transform, false);
-            fields.InitCells(fieldsSize, new ClassicMove());
+            Field field;
+            field = Instantiate(GameAssets.Instance.field);
+            field.transform.SetParent(space.transform, false);
+            field.InitCells(fieldsSize, new ClassicMove());
 
-            ChangeChildScale(space.transform.GetComponent<RectTransform>(), fields.GetComponent<RectTransform>());
+            ApplicationController.Instance.CurrentGame.Win += () => SoundController.Instance.PlaySound(Sounds.win);
+
+            ChangeChildScale(space.transform.GetComponent<RectTransform>(), field.GetComponent<RectTransform>());
+
+            this.field = field;
         }
 
         public void Clear()
