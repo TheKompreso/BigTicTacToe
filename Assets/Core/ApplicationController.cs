@@ -9,6 +9,7 @@ namespace Game
     {
         public static ApplicationController Instance { get; private set; }
         public GameLogic CurrentGame { get; private set; }
+        bool useAI = true;
 
         [SerializeField] GameSpace gameSpace;
         [SerializeField] UIElement mainMenu;
@@ -34,7 +35,10 @@ namespace Game
         {
             restartAction = () => StartClassic(fieldSize, winLength);
 
-            CurrentGame = new ClassicLogic(fieldSize, winLength);
+            CurrentGame = new ClassicLogic(fieldSize, winLength)
+            {
+                IsUseAI = useAI
+            };
             gameSpace.gameObject.SetActive(true);
             gameSpace.CreateClassicField(fieldSize);
         }
@@ -42,7 +46,10 @@ namespace Game
         {
             restartAction = () => StartBigClassic(fieldSize, winLength);
 
-            CurrentGame = new BigTicTacToeLogic(fieldSize, fieldSize, winLength);
+            CurrentGame = new BigTicTacToeLogic(fieldSize, fieldSize, winLength)
+            {
+                IsUseAI = useAI
+            };
             gameSpace.gameObject.SetActive(true);
             gameSpace.CreateBigField(fieldSize, fieldSize);
         }
@@ -57,6 +64,16 @@ namespace Game
         {
             gameSpace.Clear();
             restartAction.Invoke();
+        }
+
+        public void AIUse(bool active)
+        {
+            useAI = active;
+        }
+
+        public void AIMove()
+        {
+            gameSpace.MakeMove(CurrentGame.GetAIMove());
         }
     }
 }
