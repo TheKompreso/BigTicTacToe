@@ -23,8 +23,8 @@ namespace Game.UI
         {
             this.GetComponent<RectTransform>().sizeDelta =
                 new Vector2(
-                    size.column * 70 + size.column * 5 + 10,
-                    size.row * 70 + size.row * 5 + 10);
+                    size.column * 70,
+                    size.row * 70);
 
             m_Cells = new Cell[size.column, size.row];
             for (int j = 0; j < size.row; j++)

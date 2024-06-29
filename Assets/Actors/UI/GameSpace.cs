@@ -1,6 +1,5 @@
 using Game.Core;
 using Game.Sound;
-using System;
 using UnityEngine;
 
 namespace Game.UI
@@ -20,7 +19,7 @@ namespace Game.UI
         {
             BigField bigField;
             bigField = Instantiate(GameAssets.Instance.bigField);
-            bigField.transform.SetParent(transform, false);
+            bigField.transform.SetParent(space.transform, false);
             bigField.InitFields(fieldsCount, fieldsSize, new BigTicTacToeMove());
 
             ChangeChildScale(space.transform.GetComponent<RectTransform>(), bigField.GetComponent<RectTransform>());
@@ -56,6 +55,7 @@ namespace Game.UI
             {
                 Destroy(space.transform.GetChild(i).gameObject);
             }
+            space.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(1400, 1000);
         }
 
         void ChangeChildScale(RectTransform parant, RectTransform child)
@@ -80,7 +80,7 @@ namespace Game.UI
             else newScale = scaleFromY;
 
             child.localScale = new Vector3(newScale, newScale, 1);
-            parant.sizeDelta = new Vector2(childSize.x * newScale, childSize.y * newScale);
+            parant.sizeDelta = new Vector2(childSize.x * newScale + 15, childSize.y * newScale + 15);
         }
     }
 }
