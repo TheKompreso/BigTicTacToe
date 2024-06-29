@@ -20,7 +20,7 @@ namespace Game.UI
         {
             BigField bigField;
             bigField = Instantiate(GameAssets.Instance.bigField);
-            bigField.transform.SetParent(transform, false);
+            bigField.transform.SetParent(space.transform, false);
             bigField.InitFields(fieldsCount, fieldsSize, new BigTicTacToeMove());
 
             ChangeChildScale(space.transform.GetComponent<RectTransform>(), bigField.GetComponent<RectTransform>());
