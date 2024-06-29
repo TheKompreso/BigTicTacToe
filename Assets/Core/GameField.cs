@@ -132,7 +132,7 @@ namespace Game.Core
         {
             List<(int,int)> moves = new();
 
-            for (int row = 0; row < size.column; row++)
+            for (int row = 0; row < size.row; row++)
             {
                 for (int column = 0; column < size.column; column++)
                 {
