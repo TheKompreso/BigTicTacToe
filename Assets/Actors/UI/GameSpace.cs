@@ -1,8 +1,6 @@
 using Game.Core;
 using Game.Sound;
-using System;
 using UnityEngine;
-using static UnityEditor.UIElements.ToolbarMenu;
 
 namespace Game.UI
 {
