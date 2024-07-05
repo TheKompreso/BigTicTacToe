@@ -12,17 +12,23 @@ namespace Game.UI
         [SerializeField] Toggle classicMod;
         public void StartCustomGame()
         {
-            (int, int) size = (0,0);
-            int win = 0;
+            (int, int) size = (3,3);
+            int win = 3;
 
-            if (sizeX.text == "") size.Item1 = 3;
-            else size.Item1 = int.Parse(sizeX.text);
+            if (int.TryParse(sizeX.text, out int result))
+            {
+                size.Item1 = result;
+            }
 
-            if (sizeY.text == "") size.Item2 = 3;
-            else size.Item2 = int.Parse(sizeY.text);
+            if(int.TryParse(sizeY.text, out result))
+            {
+                size.Item2 = result;
+            }
 
-            if (winLength.text == "") win = 3;
-            else win = int.Parse(winLength.text);
+            if(int.TryParse(winLength.text, out result))
+            {
+                win = result;
+            }
 
             if (size.Item1 <= 0 || size.Item2 <= 0 || win == 0)
             {
